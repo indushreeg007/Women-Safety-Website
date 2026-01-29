@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Demo | Women Safety AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-red-50">
+
+<nav class="bg-purple-700 text-white px-6 py-4 flex justify-between">
+  <h1 class="font-bold">Women Safety AI</h1>
+  <a href="index.html">Home</a>
+</nav>
+
+<section class="p-10 text-center">
+  <h2 class="text-3xl font-bold mb-6">Emergency Simulation</h2>
+
+  <button onclick="alertUser()" 
+    class="bg-red-600 text-white px-6 py-3 rounded-xl">
+    PANIC BUTTON
+  </button>
+
+  <p id="status" class="mt-6 text-lg font-semibold"></p>
+</section>
+
+<script>
+function alertUser() {
+  const status = document.getElementById("status");
+  status.innerHTML = "🚨 Emergency Triggered. Fetching location...";
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        status.innerHTML =
+          `🚨 Emergency Alert Sent<br>
+           📍 Location:<br>
+           Latitude: ${pos.coords.latitude}<br>
+           Longitude: ${pos.coords.longitude}`;
+      },
+      () => {
+        status.innerHTML =
+          "🚨 Emergency Alert Sent<br>📍 Location access denied.";
+      }
+    );
+  } else {
+    status.innerHTML = "Geolocation not supported on this device.";
+  }
+}
+</script>
+
+</body>
+</html>
