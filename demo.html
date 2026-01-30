@@ -1,49 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Live Demo | Women Safety AI</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-red-50">
 
+<body class="bg-gradient-to-br from-pink-50 to-purple-100 min-h-screen">
+
+<!-- Navbar -->
 <nav class="bg-purple-700 text-white px-6 py-4 flex justify-between">
-  <h1 class="font-bold">Women Safety AI</h1>
-  <a href="index.html">Home</a>
+  <h1 class="font-bold text-lg">Women Safety AI</h1>
+  <a href="index.html" class="underline">Home</a>
 </nav>
 
+<!-- Demo Section -->
 <section class="p-10 text-center">
-  <h2 class="text-3xl font-bold mb-6">Emergency Simulation</h2>
+  <h2 class="text-3xl font-bold mb-8 text-purple-700">
+    Live Safety Band Demo
+  </h2>
 
-  <button onclick="alertUser()" 
-    class="bg-red-600 text-white px-6 py-3 rounded-xl">
-    PANIC BUTTON
-  </button>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
 
-  <p id="status" class="mt-6 text-lg font-semibold"></p>
+    <!-- SOS -->
+    <button onclick="sosAlert()" class="bg-red-600 text-white p-4 rounded-xl shadow">
+      🚨 SOS Alert
+    </button>
+
+    <!-- Audio -->
+    <button onclick="audioAlert()" class="bg-purple-600 text-white p-4 rounded-xl shadow">
+      🎙 Live Audio Stream
+    </button>
+
+    <!-- Vibration -->
+    <button onclick="vibrationAlert()" class="bg-indigo-600 text-white p-4 rounded-xl shadow">
+      📳 Vibration Alert
+    </button>
+
+    <!-- Heart Rate -->
+    <button onclick="heartRate()" class="bg-pink-600 text-white p-4 rounded-xl shadow">
+      ❤️ Heart Rate Monitor
+    </button>
+
+  </div>
+
+  <div id="status" class="mt-8 bg-white p-5 rounded-xl shadow max-w-2xl mx-auto text-left text-sm"></div>
 </section>
 
 <script>
-function alertUser() {
+function sosAlert() {
   const status = document.getElementById("status");
-  status.innerHTML = "🚨 Emergency Triggered. Fetching location...";
+  status.innerHTML = "🚨 SOS Activated. Fetching GPS location...";
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      pos => {
-        status.innerHTML =
-          `🚨 Emergency Alert Sent<br>
-           📍 Location:<br>
-           Latitude: ${pos.coords.latitude}<br>
-           Longitude: ${pos.coords.longitude}`;
-      },
-      () => {
-        status.innerHTML =
-          "🚨 Emergency Alert Sent<br>📍 Location access denied.";
-      }
-    );
-  } else {
-    status.innerHTML = "Geolocation not supported on this device.";
-  }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      status.innerHTML =
+        `🚨 <b>SOS Alert Sent</b><br>
+         📍 Latitude: ${pos.coords.latitude}<br>
+         📍 Longitude: ${pos.coords.longitude}<br>
+         Guardians & emergency contacts notified.`;
+    },
+    () => {
+      status.innerHTML = "🚨 SOS Alert Sent (Location access denied)";
+    }
+  );
+}
+
+function audioAlert() {
+  document.getElementById("status").innerHTML =
+    "🎙 Live Audio Stream Activated (Simulated). Guardians can listen in real-time.";
+}
+
+function vibrationAlert() {
+  document.getElementById("status").innerHTML =
+    "📳 Vibration Alert Triggered. Discreet warning sent to user.";
+}
+
+function heartRate() {
+  const rate = Math.floor(Math.random() * (120 - 80) + 80);
+  document.getElementById("status").innerHTML =
+    `❤️ Heart Rate Detected: ${rate} BPM<br>Status: Stress level monitored (Simulated).`;
 }
 </script>
 
